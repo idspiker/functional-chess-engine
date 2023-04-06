@@ -26,4 +26,8 @@ def draw_board(window, board, x=TILE_SIZE, y=TILE_SIZE):
         x = 0
         y += TILE_SIZE
 
+    # Draw highlight
+    if board[0][5] == True:
+        window.blit(images.TILE_OVERLAY_IMAGE, (x, y))
+
     draw_board(window, board[1:], x + TILE_SIZE, y)

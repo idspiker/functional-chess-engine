@@ -2,6 +2,7 @@ from identify_tile_clicked import identify_tile_clicked
 from identify_previous_tile import identify_previous_tile
 from get_moves import get_moves
 from move_piece import move_piece
+from highlight_moves import highlight_moves
 
 
 def handle_click(coords, board):
@@ -15,14 +16,18 @@ def handle_click(coords, board):
         # Handle if tile is unoccupied
         if board[tile_index][2] == 0:
             return board
-            
-        return (
+
+        board = (
             *board[:tile_index], 
             (board[tile_index][0], 
             not board[tile_index][1], 
             *board[tile_index][2:]), 
             *board[tile_index + 1:]
         )
+
+        board = highlight_moves(board, get_moves(board, tile_index))
+
+        return board
 
     # Get moves of previously selected tile
     moves = get_moves(board, prev_index)
@@ -35,4 +40,4 @@ def handle_click(coords, board):
 
 
 def deactivate_tile(tile):
-    return (tile[0], False, *tile[2:])
+    return (tile[0], False, *tile[2:5], False)
