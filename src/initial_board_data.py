@@ -1,0 +1,10 @@
+initial_board = (
+    ('w', False, 2, 'r', False),('b', False, 2, 'k', False),('w', False, 2, 'b', False),('b', False, 2, 'q', False),('w', False, 2, 'K', False),('b', False, 2, 'b', False),('w', False, 2, 'k', False),('b', False, 2, 'r', False),
+    ('b', False, 2, 'p', False),('w', False, 2, 'p', False),('b', False, 2, 'p', False),('w', False, 2, 'p', False),('b', False, 2, 'p', False),('w', False, 2, 'p', False),('b', False, 2, 'p', False),('w', False, 2, 'p', False),
+    ('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),
+    ('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),
+    ('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),
+    ('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),('b', False, 0, '', False),('w', False, 0, '', False),
+    ('w', False, 1, 'p', False),('b', False, 1, 'p', False),('w', False, 1, 'p', False),('b', False, 1, 'p', False),('w', False, 1, 'p', False),('b', False, 1, 'p', False),('w', False, 1, 'p', False),('b', False, 1, 'p', False),
+    ('b', False, 1, 'r', False),('w', False, 1, 'k', False),('b', False, 1, 'b', False),('w', False, 1, 'q', False),('b', False, 1, 'K', False),('w', False, 1, 'b', False),('b', False, 1, 'k', False),('w', False, 1, 'k', False),
+)
