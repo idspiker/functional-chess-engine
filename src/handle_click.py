@@ -12,6 +12,9 @@ def handle_click(coords, board):
 
     board = tuple(map(deactivate_tile, board))
 
+    if tile_index is None:
+        return board
+
     if prev_index is None:
         # Handle if tile is unoccupied
         if board[tile_index][2] == 0:
