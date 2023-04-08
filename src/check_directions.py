@@ -71,13 +71,18 @@ def get_movement_from_direction(direction):
 
 def check_for_edge_block(index, movement):
     """Returns true if edge is blocking movement, else false"""
-    if index % 8 == 0 and (movement == -1 or movement == -9 or movement == 7): # Left edge
+    left_edge_move = movement == -1 or movement == -9 or movement == 7
+    right_edge_move = movement == 1 or movement == -7 or movement == 9
+    top_edge_move = movement == -8 or movement == -7 or movement == -9
+    bottom_edge_move = movement == 8 or movement == 7 or movement == 9
+
+    if index % 8 == 0 and left_edge_move:
         return True
-    elif (index + 1) % 8 == 0 and (movement == 1 or movement == -7 or movement == 9): # Right edge
+    elif (index + 1) % 8 == 0 and right_edge_move:
         return True
-    elif index < 8 and (movement == -8 or movement == -7 or movement == -9): # Top edge
+    elif index < 8 and top_edge_move:
         return True
-    elif index > 55 and (movement == 8 or movement == 7 or movement == 9): # Bottom edge
+    elif index > 55 and bottom_edge_move:
         return True
 
     return False
