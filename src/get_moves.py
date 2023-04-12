@@ -3,6 +3,7 @@ from get_rook_moves import get_rook_moves
 from get_bishop_moves import get_bishop_moves
 from get_queen_moves import get_queen_moves
 from get_knight_moves import get_knight_moves
+from get_king_moves import get_king_moves
 
 
 def get_moves(board, index):
@@ -18,7 +19,3 @@ def get_moves(board, index):
         return get_queen_moves(board, index)
     elif board[index][3] == 'K':
         return get_king_moves(board, index)
-
-
-def get_king_moves(board, index):
-    return tuple()

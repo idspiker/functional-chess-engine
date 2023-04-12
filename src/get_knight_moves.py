@@ -1,7 +1,9 @@
 def get_knight_moves(board, index):
     moves = (-17, -15, -10, -6, 6, 10, 15, 17)
 
-    possible_movement = tuple(filter(lambda move: check_move(board, index, move), moves))
+    possible_movement = tuple(
+        filter(lambda move: check_move(board, index, move), moves)
+    )
 
     return tuple(map(lambda move: index + move, possible_movement))
 
