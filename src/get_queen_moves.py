@@ -14,4 +14,3 @@ def get_queen_moves(board, index):
         *check_diagonal(board, index, 'dl', team),
         *check_diagonal(board, index, 'dr', team),
     )
-    

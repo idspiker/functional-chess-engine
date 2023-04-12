@@ -43,7 +43,7 @@ def get_white_moves(board, index):
 def get_black_moves(board, index):
     moves = tuple()
 
-    if index > 63:
+    if index > 55:
         return moves
 
     # Check forward

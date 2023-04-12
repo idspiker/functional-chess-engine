@@ -2,6 +2,7 @@ from get_pawn_moves import get_pawn_moves
 from get_rook_moves import get_rook_moves
 from get_bishop_moves import get_bishop_moves
 from get_queen_moves import get_queen_moves
+from get_knight_moves import get_knight_moves
 
 
 def get_moves(board, index):
@@ -19,9 +20,5 @@ def get_moves(board, index):
         return get_king_moves(board, index)
 
 
-def get_knight_moves(board, index):
-    pass
-
-
 def get_king_moves(board, index):
-    pass
+    return tuple()

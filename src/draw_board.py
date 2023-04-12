@@ -17,14 +17,14 @@ def draw_board(window, board, x=TILE_SIZE, y=TILE_SIZE):
     # Draw selected
     if board[0][1] == True:
         window.blit(images.SELECTED_TILE_OVERLAY_IMAGE, (x, y))
+    
+    # Draw highlight
+    if board[0][5] == True:
+        window.blit(images.TILE_OVERLAY_IMAGE, (x, y))
 
     # If occupied, draw piece
     if board[0][2] != 0:
         window.blit(pick_piece(board[0][2], board[0][3]), (x, y))
-
-    # Draw highlight
-    if board[0][5] == True:
-        window.blit(images.TILE_OVERLAY_IMAGE, (x, y))
 
     if x == TILE_SIZE * 8:
         x = 0
