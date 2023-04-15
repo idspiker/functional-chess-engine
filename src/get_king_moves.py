@@ -43,3 +43,11 @@ def check_for_edge(index, movement):
 
 def check_for_danger(board, index, movement):
     return False
+
+
+def check_direction_for_danger(board, index, offset, team, steps=0):
+    pass
+
+
+def check_for_knight(board, index, movement, offset):
+    pass
