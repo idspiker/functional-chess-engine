@@ -1,7 +1,18 @@
+from tile import Tile
+
+
 def move_piece(board, new_index, old_index):
     piece_data = board[old_index]
-    piece_tile = (board[new_index][0], *piece_data[1:4], True, False)
-    empty_tile = (piece_data[0], False, 0, '', False, False)
+    
+    piece_tile = piece_data.change_field(
+        'tile_color', board[new_index].tile_color
+    ).change_field(
+        'has_moved', True
+    ).change_field(
+        'is_highlighted', False
+    )
+
+    empty_tile = Tile(piece_data.tile_color, False, 0, '', False, False)
 
     if new_index > old_index:
         board = (

@@ -13,7 +13,7 @@ def check_move(board, index, movement):
     if check_for_edge(index, movement):
         return False
 
-    if board[index + movement][2] == board[index][2]:
+    if board[index + movement].occupant_team == board[index].occupant_team:
         return False
 
     return True

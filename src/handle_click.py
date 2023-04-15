@@ -17,14 +17,14 @@ def handle_click(coords, board):
 
     if prev_index is None:
         # Handle if tile is unoccupied
-        if board[tile_index][2] == 0:
+        if board[tile_index].occupant_team == 0:
             return board
 
         board = (
-            *board[:tile_index], 
-            (board[tile_index][0], 
-            not board[tile_index][1], 
-            *board[tile_index][2:]), 
+            *board[:tile_index],
+            board[tile_index].change_field(
+                'is_selected', not board[tile_index].is_selected
+            ),
             *board[tile_index + 1:]
         )
 
@@ -43,4 +43,8 @@ def handle_click(coords, board):
 
 
 def deactivate_tile(tile):
-    return (tile[0], False, *tile[2:5], False)
+    return tile.change_field(
+        'is_selected', False
+    ).change_field(
+        'is_highlighted', False
+    )

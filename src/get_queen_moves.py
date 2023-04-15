@@ -2,7 +2,7 @@ from check_directions import check_direction, check_diagonal
 
 
 def get_queen_moves(board, index):
-    team = board[index][2]
+    team = board[index].occupant_team
 
     return (
         *check_direction(board, index, 'l', team),

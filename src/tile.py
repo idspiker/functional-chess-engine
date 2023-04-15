@@ -6,7 +6,7 @@ class Tile:
     is_selected: bool
     occupant_team: int
     piece: str
-    first_move: bool
+    has_moved: bool
     is_highlighted: bool
 
     def to_tuple(self):
@@ -15,7 +15,7 @@ class Tile:
             self.is_selected,
             self.occupant_team,
             self.piece,
-            self.first_move,
+            self.has_moved,
             self.is_highlighted
         )
 

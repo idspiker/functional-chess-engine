@@ -5,10 +5,11 @@ def check_direction(board, index, direction, team, movement=0, moves=tuple()):
     if check_for_edge_block(index, movement) == True:
         return moves
 
-    if board[index + movement][2] == team:
+    if board[index + movement].occupant_team == team:
         return moves
 
-    if board[index + movement][2] != team and board[index + movement][2] != 0:
+    if (board[index + movement].occupant_team != team 
+        and board[index + movement].occupant_team != 0):
         return (*moves, index + movement)
 
     moves = (*moves, index + movement)
@@ -30,10 +31,11 @@ def check_diagonal(board, index, direction, team, movement=0, moves=tuple()):
     if check_for_edge_block(index, movement) == True:
         return moves
 
-    if board[index + movement][2] == team:
+    if board[index + movement].occupant_team == team:
         return moves
 
-    if board[index + movement][2] != team and board[index + movement][2] != 0:
+    if (board[index + movement].occupant_team != team 
+        and board[index + movement].occupant_team != 0):
         return (*moves, index + movement)
 
     moves = (*moves, index + movement)
