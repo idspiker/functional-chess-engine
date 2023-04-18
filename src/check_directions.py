@@ -1,7 +1,10 @@
-def check_direction(board, index, direction, team, movement=0, moves=tuple()):
-    if movement == 0:
-        movement = get_movement_from_direction(direction)
+from functools import reduce
 
+
+from apply_functions import apply_functions
+
+
+def check_direction(board, index, movement, team, moves=tuple()):
     if check_for_edge_block(index, movement) == True:
         return moves
 
@@ -17,17 +20,13 @@ def check_direction(board, index, direction, team, movement=0, moves=tuple()):
     return check_direction(
         board, 
         index + movement, 
-        direction, 
-        team, 
         movement, 
+        team,
         moves
     )
 
 
-def check_diagonal(board, index, direction, team, movement=0, moves=tuple()):
-    if movement == 0:
-        movement = get_movement_from_direction(direction)
-
+def check_diagonal(board, index, movement, team, moves=tuple()):
     if check_for_edge_block(index, movement) == True:
         return moves
 
@@ -43,48 +42,39 @@ def check_diagonal(board, index, direction, team, movement=0, moves=tuple()):
     return check_diagonal(
         board, 
         index + movement, 
-        direction, 
-        team, 
-        movement, 
+        movement,
+        team,
         moves
     )
 
 
-def get_movement_from_direction(direction):
-    if direction == 'r':
-        return 1
-    elif direction == 'l':
-        return -1
-    elif direction == 'u':
-        return -8
-    elif direction == 'd':
-        return 8
-    elif direction == 'ul':
-        return -9
-    elif direction == 'ur':
-        return -7
-    elif direction == 'dl':
-        return 7
-    elif direction == 'dr':
-        return 9
-    else:
-        raise Exception(f'"{direction}" is not a valid direction')
-
-
 def check_for_edge_block(index, movement):
     """Returns true if edge is blocking movement, else false"""
-    left_edge_move = movement == -1 or movement == -9 or movement == 7
-    right_edge_move = movement == 1 or movement == -7 or movement == 9
-    top_edge_move = movement == -8 or movement == -7 or movement == -9
-    bottom_edge_move = movement == 8 or movement == 7 or movement == 9
+    return reduce(
+        lambda x, y: x or y, 
+        apply_functions(
+            (
+                check_left_edge, 
+                check_right_edge, 
+                check_top_edge, 
+                check_bottom_edge
+            ), 
+            (index, movement)
+        )
+    )
 
-    if index % 8 == 0 and left_edge_move:
-        return True
-    elif (index + 1) % 8 == 0 and right_edge_move:
-        return True
-    elif index < 8 and top_edge_move:
-        return True
-    elif index > 55 and bottom_edge_move:
-        return True
 
-    return False
+def check_left_edge(index, movement):
+    return index % 8 == 0 and movement in (-1, -9, 7)
+
+
+def check_right_edge(index, movement):
+    return index % 8 == 7 and movement in (1, -7, 9)
+
+
+def check_top_edge(index, movement):
+    return index < 8 and movement in (-8, -7, -9)
+
+
+def check_bottom_edge(index, movement):
+    return index > 55 and movement in (8, 7, 9)
