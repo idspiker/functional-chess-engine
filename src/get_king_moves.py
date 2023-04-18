@@ -1,4 +1,6 @@
 from check_directions import check_for_edge_block
+from get_knight_moves import check_for_edge
+
 
 def get_king_moves(board, index):
     moves = (-1, -9, -8, -7, 1, 9, 8, 7)
@@ -47,7 +49,6 @@ def check_for_danger(board, index, movement):
     team = board[index].occupant_team
 
     danger_directions = (-1, 1, -8, 8, -7, 7, -9, 9)
-    knight_offsets = (-17, -15, -10, -6, 6, 10, 15, 17)
 
     possible_danger = tuple(
         map(
@@ -58,29 +59,58 @@ def check_for_danger(board, index, movement):
         )
     )
 
-    possible_knights = tuple(
-        map(
-            lambda offset: check_for_knight(
-                board, index + movement, offset, team
-            ),
-            knight_offsets
-        )
-    )
+    possible_knights = check_for_knights(board, index + movement, team)
 
-    if True in (*possible_danger, *possible_knights):
+    if True in (*possible_danger, possible_knights):
         return True
 
     return False
 
 
-def check_direction_for_danger(board, index, offset, team, steps=0):
-    if steps == 0:
+def check_direction_for_danger(board, index, offset, team, is_first_step=True):
+    if is_first_step:
         if check_for_edge_block(index, offset):
             return False
 
-        index += offset
+        # Check for pawn and king TODO change pawn algo
+        if team == 1:
+            l_pos_pawn = board[index - 9]
+            l_edge_block = check_for_edge_block(index, -9)
+            r_pos_pawn = board[index - 7]
+            r_edge_block = check_for_edge_block(index, -7)
+            enemy = 2
+        elif team == 2:
+            l_pos_pawn = board[index + 7]
+            l_edge_block = check_for_edge_block(index, 7)
+            r_pos_pawn = board[index + 9]
+            r_edge_block = check_for_edge_block(index, 9)
+            enemy = 1
 
-        # Check for king and pawn
+        # Pawn check
+        if (not l_edge_block 
+            and l_pos_pawn.occupant_team == enemy 
+            and l_pos_pawn.piece == 'p'):
+            return True
+        if (not r_edge_block 
+            and r_pos_pawn.occupant_team == enemy 
+            and r_pos_pawn.piece == 'p'):
+            return True
+
+        # King check
+        def king_check(offset):
+            if check_for_edge_block(index, offset):
+                return False
+
+            pos_king = board[index + offset]
+            if pos_king.occupant_team == enemy and pos_king.piece == 'K':
+                return True
+            
+            return False
+
+        if True in tuple(map(king_check, (-1, -9, -8, -7, 1, 9, 8, 7))):
+            return True
+
+        index += offset
 
     if board[index].occupant_team == team and board[index].piece != 'K':
         return False
@@ -97,9 +127,30 @@ def check_direction_for_danger(board, index, offset, team, steps=0):
         return False
 
     return check_direction_for_danger(
-        board, index + offset, offset, team, steps + 1
+        board, index + offset, offset, team, False
     )
 
 
-def check_for_knight(board, index, offset, team):
+def check_for_knights(board, index, team):
+    # TODO implement later
+    # offsets = (-17, -15, -10, -6, 6, 10, 15, 17)
+
+    # def check_offset(board, index, offset):
+    #     if check_for_edge(index, offset):
+    #         return False
+
+    #     print(check_for_edge(index, offset))
+    #     print(index + offset)
+
+    #     if (board[index + offset].occupant_team != team 
+    #         and board[index + offset].piece == 'k'):
+    #         return True
+
+    # possible_knights = tuple(
+    #     map(lambda offset: check_offset(board, index, offset), offsets)
+    # )
+
+    # if True in possible_knights:
+    #     return True
+
     return False
