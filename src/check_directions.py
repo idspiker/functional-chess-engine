@@ -1,66 +1,42 @@
-from functools import reduce
-
-
-from apply_functions import apply_functions
+from utility_funcs import check_conditions
 
 
 def check_direction(board, index, movement, team, moves=tuple()):
-    if check_for_edge_block(index, movement) == True:
-        return moves
-
-    if board[index + movement].occupant_team == team:
-        return moves
-
-    if (board[index + movement].occupant_team != team 
-        and board[index + movement].occupant_team != 0):
-        return (*moves, index + movement)
-
-    moves = (*moves, index + movement)
-
-    return check_direction(
-        board, 
-        index + movement, 
-        movement, 
-        team,
-        moves
+    return (
+        moves 
+        if hard_stop_check(board, index, movement, team)
+            else (*moves, index + movement)
+            if enemy_check(board, index, movement, team)
+                else check_direction(
+                    board, index + movement, 
+                    movement, team, (*moves, index + movement)
+                )
     )
 
 
-def check_diagonal(board, index, movement, team, moves=tuple()):
-    if check_for_edge_block(index, movement) == True:
-        return moves
+def hard_stop_check(board, index, movement, team):
+    return (
+        check_for_edge_block(index, movement) 
+        or teammate_check(board, index, movement, team)
+    )
 
-    if board[index + movement].occupant_team == team:
-        return moves
 
-    if (board[index + movement].occupant_team != team 
-        and board[index + movement].occupant_team != 0):
-        return (*moves, index + movement)
+def teammate_check(board, index, movement, team):
+    return board[index + movement].occupant_team == team
 
-    moves = (*moves, index + movement)
 
-    return check_diagonal(
-        board, 
-        index + movement, 
-        movement,
-        team,
-        moves
+def enemy_check(board, index, movement, team):
+    return (
+        board[index + movement].occupant_team != team 
+        and board[index + movement].occupant_team != 0
     )
 
 
 def check_for_edge_block(index, movement):
     """Returns true if edge is blocking movement, else false"""
-    return reduce(
-        lambda x, y: x or y, 
-        apply_functions(
-            (
-                check_left_edge, 
-                check_right_edge, 
-                check_top_edge, 
-                check_bottom_edge
-            ), 
-            (index, movement)
-        )
+    return check_conditions(
+        (check_left_edge, check_right_edge, check_top_edge, check_bottom_edge), 
+        (index, movement)
     )
 
 
