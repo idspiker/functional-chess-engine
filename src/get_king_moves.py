@@ -1,4 +1,4 @@
-from check_directions import check_for_edge_block
+from check_moves import check_for_edge_block
 from get_knight_moves import check_for_edge
 
 
