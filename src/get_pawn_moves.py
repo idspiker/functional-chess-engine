@@ -12,39 +12,21 @@ def get_pawn_moves(board, index):
 
 
 def get_white_moves(board, index):
-    moves = tuple()
-    
-    if check_forward(board, index, -8, lambda i: i < 8):
-        moves = (*moves, index - 8)
-
-    if check_double_forward(board, index, -8, lambda i: i < 8):
-        moves = (*moves, index - 16)
-
-    if check_left_diagonal(board, index, -9):
-        moves = (*moves, index - 9)
-        
-    if check_right_diagonal(board, index, -7):
-        moves = (*moves, index - 7)
-
-    return moves
+    return check_one_step_moves(
+        (index - 8, check_forward(board, index, -8, lambda i: i < 8)),
+        (index - 16, check_double_forward(board, index, -8, lambda i: i < 8)),
+        (index - 9, check_left_diagonal(board, index, -9)),
+        (index - 7, check_right_diagonal(board, index, -7))
+    )
 
 
 def get_black_moves(board, index):
-    moves = tuple()
-
-    if check_forward(board, index, 8, lambda i: i > 55):
-        moves = (*moves, index + 8)
-
-    if check_double_forward(board, index, 8, lambda i: i > 55):
-        moves = (*moves, index + 16)
-
-    if check_left_diagonal(board, index, 7):
-        moves = (*moves, index + 7)
-
-    if check_right_diagonal(board, index, 9):
-        moves = (*moves, index + 9)
-
-    return moves
+    return check_one_step_moves(
+        (index + 8, check_forward(board, index, 8, lambda i: i > 55)),
+        (index + 16, check_double_forward(board, index, 8, lambda i: i > 55)),
+        (index + 7, check_left_diagonal(board, index, 7)),
+        (index + 9, check_right_diagonal(board, index, 9))
+    )
 
 
 def check_forward(board, index, offset, edge_check):
@@ -73,3 +55,6 @@ def check_right_diagonal(board, index, offset):
         and enemy_check(board, index, offset, board[index].occupant_team)
     )
 
+
+def check_one_step_moves(*moves):
+    return tuple(map(lambda m: m[0], filter(lambda m: m[1], moves)))
