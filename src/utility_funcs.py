@@ -22,3 +22,7 @@ def check_conditions(functions, params):
 def flatten(tup):
     """Flatten 2D tuple"""
     return reduce(lambda x, y: (*x, *y), tup)
+
+
+def combine_on_condition(*items):
+    return tuple(map(lambda i: i[0], filter(lambda i: i[1], items)))

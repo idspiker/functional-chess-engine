@@ -1,4 +1,5 @@
 from check_moves import enemy_check
+from utility_funcs import combine_on_condition
 
 
 def get_pawn_moves(board, index):
@@ -12,7 +13,7 @@ def get_pawn_moves(board, index):
 
 
 def get_white_moves(board, index):
-    return check_one_step_moves(
+    return combine_on_condition(
         (index - 8, check_forward(board, index, -8, lambda i: i < 8)),
         (index - 16, check_double_forward(board, index, -8, lambda i: i < 8)),
         (index - 9, check_left_diagonal(board, index, -9)),
@@ -21,7 +22,7 @@ def get_white_moves(board, index):
 
 
 def get_black_moves(board, index):
-    return check_one_step_moves(
+    return combine_on_condition(
         (index + 8, check_forward(board, index, 8, lambda i: i > 55)),
         (index + 16, check_double_forward(board, index, 8, lambda i: i > 55)),
         (index + 7, check_left_diagonal(board, index, 7)),
@@ -54,7 +55,3 @@ def check_right_diagonal(board, index, offset):
         index % 8 != 7
         and enemy_check(board, index, offset, board[index].occupant_team)
     )
-
-
-def check_one_step_moves(*moves):
-    return tuple(map(lambda m: m[0], filter(lambda m: m[1], moves)))
