@@ -1,17 +1,11 @@
 def get_pawn_moves(board, index):
-    team = board[index].occupant_team
-
-    moves = tuple()
-
-    # Check for white team
-    if team == 1:
-        moves = get_white_moves(board, index)
-
-    # Check for black team
-    elif team == 2:
-        moves = get_black_moves(board, index)
-
-    return moves
+    return (
+        get_white_moves(board, index)
+        if (team := board[index].occupant_team) == 1
+            else get_black_moves(board, index)
+            if team == 2
+                else tuple()
+    )
 
 
 def get_white_moves(board, index):
