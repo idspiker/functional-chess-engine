@@ -1,3 +1,6 @@
+from check_moves import enemy_check
+
+
 def get_pawn_moves(board, index):
     return (
         get_white_moves(board, index)
@@ -10,28 +13,18 @@ def get_pawn_moves(board, index):
 
 def get_white_moves(board, index):
     moves = tuple()
-
-    if index < 8:
-        return moves
-
-    # Check forward
-    if board[index - 8].occupant_team == 0:
+    
+    if check_forward(board, index, -8, lambda i: i < 8):
         moves = (*moves, index - 8)
 
-    # Check diagonals
-    if index % 8 != 0 and board[index - 9].occupant_team == 2:
-        moves = (*moves, index - 9)
-    if (index + 1) % 8 != 0 and board[index - 7].occupant_team == 2:
-        moves = (*moves, index - 7)
-
-    # Check double forward
-    if (index - 8 < 8 
-        or board[index - 8].occupant_team != 0 
-        or board[index].has_moved == True):
-        return moves
-
-    if board[index - 16].occupant_team == 0:
+    if check_double_forward(board, index, -8, lambda i: i < 8):
         moves = (*moves, index - 16)
+
+    if check_left_diagonal(board, index, -9):
+        moves = (*moves, index - 9)
+        
+    if check_right_diagonal(board, index, -7):
+        moves = (*moves, index - 7)
 
     return moves
 
@@ -39,26 +32,44 @@ def get_white_moves(board, index):
 def get_black_moves(board, index):
     moves = tuple()
 
-    if index > 55:
-        return moves
-
-    # Check forward
-    if board[index + 8].occupant_team == 0:
+    if check_forward(board, index, 8, lambda i: i > 55):
         moves = (*moves, index + 8)
 
-    # Check diagonals
-    if index % 8 != 0 and board[index + 7].occupant_team == 1:
-        moves = (*moves, index + 7)
-    if (index + 1) % 8 != 0 and board[index + 9].occupant_team == 1:
-        moves = (*moves, index + 9)
-
-    # Check double forward
-    if (index + 8 > 55 
-        or board[index + 8].occupant_team != 0 
-        or board[index].has_moved == True):
-        return moves
-
-    if board[index + 16].occupant_team == 0:
+    if check_double_forward(board, index, 8, lambda i: i > 55):
         moves = (*moves, index + 16)
 
+    if check_left_diagonal(board, index, 7):
+        moves = (*moves, index + 7)
+
+    if check_right_diagonal(board, index, 9):
+        moves = (*moves, index + 9)
+
     return moves
+
+
+def check_forward(board, index, offset, edge_check):
+    return not edge_check(index) and board[index + offset].occupant_team == 0
+
+
+def check_double_forward(board, index, offset, edge_check):
+    return (
+        not edge_check(index + offset) 
+        and board[index].has_moved == False
+        and board[index + offset].occupant_team == 0
+        and board[index + offset * 2].occupant_team == 0
+    )
+
+
+def check_left_diagonal(board, index, offset):
+    return (
+        index % 8 != 0 
+        and enemy_check(board, index, offset, board[index].occupant_team)
+    )
+
+
+def check_right_diagonal(board, index, offset):
+    return (
+        index % 8 != 7
+        and enemy_check(board, index, offset, board[index].occupant_team)
+    )
+
