@@ -1,16 +1,15 @@
 from check_moves import check_for_edge_block
 from get_knight_moves import check_for_edge
+from utility_funcs import map_filter
 
 
 def get_king_moves(board, index):
-    moves = (-1, -9, -8, -7, 1, 9, 8, 7)
-
-    possible_movement = tuple(
-        filter(lambda move: check_move(board, index, move), moves)
+    return map_filter(
+        lambda move: check_move(board, index, move),
+        lambda move: index + move,
+        (-1, -9, -8, -7, 1, 9, 8, 7)
     )
-
-    return tuple(map(lambda move: index + move, possible_movement))
-
+    
 
 def check_move(board, index, move):
     if check_for_edge(index, move):

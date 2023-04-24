@@ -1,23 +1,23 @@
+from utility_funcs import map_filter
+from check_moves import teammate_check
+
+
 def get_knight_moves(board, index):
-    moves = (-17, -15, -10, -6, 6, 10, 15, 17)
-
-    possible_movement = tuple(
-        filter(lambda move: check_move(board, index, move), moves)
+    return map_filter(
+        lambda move: check_move(board, index, move),
+        lambda move: index + move, 
+        (-17, -15, -10, -6, 6, 10, 15, 17)
     )
-
-    return tuple(map(lambda move: index + move, possible_movement))
 
 
 def check_move(board, index, movement):
-    # Return true if valid, false else
-    if check_for_edge(index, movement):
-        return False
-
-    if board[index + movement].occupant_team == board[index].occupant_team:
-        return False
-
-    return True
-
+    return (
+        not check_for_edge(index, movement)
+        and not teammate_check(
+            board, index, movement, board[index].occupant_team
+        )
+    )
+    
 
 def check_for_edge(index, movement):
     # Check if move will take the piece over the edge of board

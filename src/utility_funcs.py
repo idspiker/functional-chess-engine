@@ -30,3 +30,7 @@ def combine_on_condition(*items):
 
 def is_empty(container):
     return len(container) == 0
+
+
+def map_filter(filter_func, map_func, container):
+    return tuple(map(map_func, filter(filter_func, container)))
