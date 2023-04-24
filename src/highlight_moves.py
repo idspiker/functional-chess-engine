@@ -3,7 +3,8 @@ def highlight_moves(board, moves):
 
 
 def highlight_tile(index, tile, moves):
-    if index in moves:
-        return tile.change_field('is_highlighted', True)
-    else:
-        return tile
+    return (
+        tile.change_field('is_highlighted', True) 
+        if index in moves 
+            else tile
+    )

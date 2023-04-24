@@ -26,3 +26,7 @@ def flatten(tup):
 
 def combine_on_condition(*items):
     return tuple(map(lambda i: i[0], filter(lambda i: i[1], items)))
+
+
+def is_empty(container):
+    return len(container) == 0

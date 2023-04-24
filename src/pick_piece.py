@@ -2,7 +2,7 @@ import images
 
 
 def pick_piece(team: int, piece: str):
-    images_table = {
+    return {
         '1p': images.LIGHT_PAWN_IMAGE,
         '1r': images.LIGHT_ROOK_IMAGE,
         '1k': images.LIGHT_KNIGHT_IMAGE,
@@ -15,6 +15,4 @@ def pick_piece(team: int, piece: str):
         '2b': images.DARK_BISHOP_IMAGE,
         '2q': images.DARK_QUEEN_IMAGE,
         '2K': images.DARK_KING_IMAGE,
-    }
-
-    return images_table[f'{team}{piece}']
+    }[f'{team}{piece}']
