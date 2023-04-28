@@ -1,18 +1,19 @@
+from functools import partial
+
 from utility_funcs import check_conditions, flatten
+
 
 
 def check_moves(board, index, directions):
     return flatten(
         map(
-            lambda d: check_direction(
-                board, index, d, board[index].occupant_team
-            ), 
+            partial(check_direction, board, index, board[index].occupant_team),
             directions
         )
     )
 
 
-def check_direction(board, index, movement, team, moves=tuple()):
+def check_direction(board, index, team, movement, moves=tuple()):
     return (
         moves 
         if hard_stop_check(board, index, movement, team)
@@ -20,7 +21,7 @@ def check_direction(board, index, movement, team, moves=tuple()):
             if enemy_check(board, index, movement, team)
                 else check_direction(
                     board, index + movement, 
-                    movement, team, (*moves, index + movement)
+                    team, movement, (*moves, index + movement)
                 )
     )
 
