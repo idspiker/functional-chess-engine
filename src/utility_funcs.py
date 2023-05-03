@@ -1,4 +1,4 @@
-from functools import reduce
+from functools import reduce, partial
 
 
 def apply_functions(functions, params, results=tuple()):
@@ -16,12 +16,7 @@ def apply_functions(functions, params, results=tuple()):
 
 
 def check_conditions(functions, params):
-    return reduce(lambda x, y: x or y, apply_functions(functions, params))
-
-
-def flatten(tup):
-    """Flatten 2D tuple"""
-    return reduce(lambda x, y: (*x, *y), tup)
+    return reduce(logical_or, apply_functions(functions, params))
 
 
 def combine_on_condition(*items):
@@ -34,3 +29,10 @@ def is_empty(container):
 
 def map_filter(filter_func, map_func, container):
     return tuple(map(map_func, filter(filter_func, container)))
+
+
+def logical_or(x, y):
+    return x or y
+
+
+flatten = partial(reduce, lambda x, y: (*x, *y))

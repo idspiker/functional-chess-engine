@@ -1,11 +1,12 @@
 from specs import TILE_SIZE
 from pick_piece import pick_piece
 import images
+from utility_funcs import is_empty
 from field_enumerations import TileColor, Team
 
 
 def draw_board(window, board, x=TILE_SIZE, y=TILE_SIZE):
-    if len(board) == 0:
+    if is_empty(board):
         return
     
     window.blit(
