@@ -4,8 +4,7 @@ from utility_funcs import check_conditions, flatten
 from field_enumerations import Team
 
 
-
-def check_moves(board, index, directions):
+def check_moves(directions, board, index):
     return flatten(
         map(
             partial(check_direction, board, index, board[index].occupant_team),
