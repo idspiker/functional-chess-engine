@@ -3,6 +3,7 @@ from identify_previous_tile import identify_previous_tile
 from get_moves import get_moves
 from move_piece import move_piece
 from highlight_moves import highlight_moves
+from field_enumerations import Team
 
 
 def handle_click(coords, board):
@@ -17,7 +18,7 @@ def handle_click(coords, board):
 
     if prev_index is None:
         # Handle if tile is unoccupied
-        if board[tile_index].occupant_team == 0:
+        if board[tile_index].occupant_team is Team.EMPTY:
             return board
 
         board = (

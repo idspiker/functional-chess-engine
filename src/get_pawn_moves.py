@@ -1,13 +1,14 @@
 from check_moves import enemy_check
 from utility_funcs import combine_on_condition
+from field_enumerations import Team
 
 
 def get_pawn_moves(board, index):
     return (
         get_white_moves(board, index)
-        if (team := board[index].occupant_team) == 1
+        if (team := board[index].occupant_team) is Team.WHITE
             else get_black_moves(board, index)
-            if team == 2
+            if team is Team.BLACK
                 else tuple()
     )
 
@@ -31,15 +32,18 @@ def get_black_moves(board, index):
 
 
 def check_forward(board, index, offset, edge_check):
-    return not edge_check(index) and board[index + offset].occupant_team == 0
+    return (
+        not edge_check(index) 
+        and board[index + offset].occupant_team is Team.EMPTY
+    )
 
 
 def check_double_forward(board, index, offset, edge_check):
     return (
         not edge_check(index + offset) 
         and board[index].has_moved == False
-        and board[index + offset].occupant_team == 0
-        and board[index + offset * 2].occupant_team == 0
+        and board[index + offset].occupant_team is Team.EMPTY
+        and board[index + offset * 2].occupant_team is Team.EMPTY
     )
 
 

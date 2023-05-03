@@ -1,6 +1,7 @@
 from functools import partial
 
 from utility_funcs import check_conditions, flatten
+from field_enumerations import Team
 
 
 
@@ -34,13 +35,13 @@ def hard_stop_check(board, index, movement, team):
 
 
 def teammate_check(board, index, movement, team):
-    return board[index + movement].occupant_team == team
+    return board[index + movement].occupant_team is team
 
 
 def enemy_check(board, index, movement, team):
     return (
-        board[index + movement].occupant_team != team 
-        and board[index + movement].occupant_team != 0
+        board[index + movement].occupant_team is not team 
+        and board[index + movement].occupant_team is not Team.EMPTY
     )
 
 

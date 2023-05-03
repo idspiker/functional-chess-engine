@@ -1,6 +1,7 @@
 from check_moves import check_for_edge_block
 from get_knight_moves import check_for_edge
 from utility_funcs import map_filter
+from field_enumerations import Team, Piece
 
 
 def get_king_moves(board, index):
@@ -15,7 +16,7 @@ def check_move(board, index, move):
     if check_for_edge(index, move):
         return False
 
-    if board[index + move].occupant_team == board[index].occupant_team:
+    if board[index + move].occupant_team is board[index].occupant_team:
         return False
 
     if check_for_danger(board, index, move):
@@ -72,27 +73,27 @@ def check_direction_for_danger(board, index, offset, team, is_first_step=True):
             return False
 
         # Check for pawn and king TODO change pawn algo
-        if team == 1:
+        if team is Team.WHITE:
             l_pos_pawn = board[index - 9]
             l_edge_block = check_for_edge_block(index, -9)
             r_pos_pawn = board[index - 7]
             r_edge_block = check_for_edge_block(index, -7)
-            enemy = 2
-        elif team == 2:
+            enemy = Team.BLACK
+        elif team is Team.BLACK:
             l_pos_pawn = board[index + 7]
             l_edge_block = check_for_edge_block(index, 7)
             r_pos_pawn = board[index + 9]
             r_edge_block = check_for_edge_block(index, 9)
-            enemy = 1
+            enemy = Team.WHITE
 
         # Pawn check
         if (not l_edge_block 
-            and l_pos_pawn.occupant_team == enemy 
-            and l_pos_pawn.piece == 'p'):
+            and l_pos_pawn.occupant_team is enemy 
+            and l_pos_pawn.piece is Piece.PAWN):
             return True
         if (not r_edge_block 
-            and r_pos_pawn.occupant_team == enemy 
-            and r_pos_pawn.piece == 'p'):
+            and r_pos_pawn.occupant_team is enemy 
+            and r_pos_pawn.piece is Piece.PAWN):
             return True
 
         # King check
@@ -101,7 +102,7 @@ def check_direction_for_danger(board, index, offset, team, is_first_step=True):
                 return False
 
             pos_king = board[index + offset]
-            if pos_king.occupant_team == enemy and pos_king.piece == 'K':
+            if pos_king.occupant_team is enemy and pos_king.piece is Piece.KING:
                 return True
             
             return False
@@ -111,10 +112,10 @@ def check_direction_for_danger(board, index, offset, team, is_first_step=True):
 
         index += offset
 
-    if board[index].occupant_team == team and board[index].piece != 'K':
+    if board[index].occupant_team is team and board[index].piece is not Piece.KING:
         return False
 
-    if board[index].occupant_team == (2 if team == 1 else 1):
+    if board[index].occupant_team is (Team.BLACK if team is Team.WHITE else Team.WHITE):
         if offset in (-1, 1, -8, 8) and board[index].piece in ('q', 'r'):
             return True
         if offset in (-7, 7, -9, 9) and board[index].piece in ('q', 'b'):

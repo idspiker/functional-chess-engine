@@ -1,4 +1,5 @@
 from tile import Tile
+from field_enumerations import Team, Piece
 
 
 def move_piece(board, new_index, old_index):
@@ -12,7 +13,9 @@ def move_piece(board, new_index, old_index):
         'is_highlighted', False
     )
 
-    empty_tile = Tile(piece_data.tile_color, False, 0, '', False, False)
+    empty_tile = Tile(
+        piece_data.tile_color, False, Team.EMPTY, Piece.EMPTY, False, False
+    )
 
     if new_index > old_index:
         board = (

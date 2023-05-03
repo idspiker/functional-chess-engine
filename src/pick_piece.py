@@ -1,18 +1,33 @@
 import images
+from field_enumerations import Team, Piece
 
 
 def pick_piece(team: int, piece: str):
-    return {
-        '1p': images.LIGHT_PAWN_IMAGE,
-        '1r': images.LIGHT_ROOK_IMAGE,
-        '1k': images.LIGHT_KNIGHT_IMAGE,
-        '1b': images.LIGHT_BISHOP_IMAGE,
-        '1q': images.LIGHT_QUEEN_IMAGE,
-        '1K': images.LIGHT_KING_IMAGE,
-        '2p': images.DARK_PAWN_IMAGE,
-        '2r': images.DARK_ROOK_IMAGE,
-        '2k': images.DARK_KNIGHT_IMAGE,
-        '2b': images.DARK_BISHOP_IMAGE,
-        '2q': images.DARK_QUEEN_IMAGE,
-        '2K': images.DARK_KING_IMAGE,
-    }[f'{team}{piece}']
+    if team is Team.WHITE:
+        match piece: 
+            case Piece.PAWN:
+                return images.LIGHT_PAWN_IMAGE
+            case Piece.ROOK:
+                return images.LIGHT_ROOK_IMAGE
+            case Piece.KNIGHT:
+                return images.LIGHT_KNIGHT_IMAGE
+            case Piece.BISHOP:
+                return images.LIGHT_BISHOP_IMAGE
+            case Piece.QUEEN:
+                return images.LIGHT_QUEEN_IMAGE
+            case Piece.KING:
+                return images.LIGHT_KING_IMAGE
+    elif team is Team.BLACK:
+        match piece: 
+            case Piece.PAWN:
+                return images.DARK_PAWN_IMAGE
+            case Piece.ROOK:
+                return images.DARK_ROOK_IMAGE
+            case Piece.KNIGHT:
+                return images.DARK_KNIGHT_IMAGE
+            case Piece.BISHOP:
+                return images.DARK_BISHOP_IMAGE
+            case Piece.QUEEN:
+                return images.DARK_QUEEN_IMAGE
+            case Piece.KING:
+                return images.DARK_KING_IMAGE

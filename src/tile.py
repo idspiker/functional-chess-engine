@@ -1,11 +1,13 @@
 from dataclasses import dataclass
 
+from field_enumerations import TileColor, Team, Piece
+
 @dataclass(frozen=True)
 class Tile:
-    tile_color: str
+    tile_color: TileColor
     is_selected: bool
-    occupant_team: int
-    piece: str
+    occupant_team: Team
+    piece: Piece
     has_moved: bool
     is_highlighted: bool
 
